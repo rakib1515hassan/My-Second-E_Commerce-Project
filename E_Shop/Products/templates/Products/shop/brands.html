@@ -1,0 +1,8 @@
+{%  load static %}
+{% load Products_Discount_Price %}
+{% for brand in brand %}
+<div class="single-widget-category">
+    <input type="checkbox" data-filter="brand" id="brand-{{brand.id}}" value="{{brand.id}}" class="filter-checkbox">
+    <label for="brand-{{brand.id}}">{{brand.name}}-{{brand.id}} <span>( {{brand.products_set.all.count}} )</span></label>
+</div>
+{% endfor %}

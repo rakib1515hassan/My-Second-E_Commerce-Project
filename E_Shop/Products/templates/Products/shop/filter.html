@@ -1,0 +1,172 @@
+{%  load static%}
+
+{% load Products_Discount_Price %}
+{% block css %}
+<style>
+    input[type=range]{
+    -webkit-appearance: none;
+    width:100%;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+    width: 1000px;
+    height: 5px;
+    background: #FCBE00;
+    border: none;
+    border-radius: 3px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: goldenrod;
+    margin-top: -5px;
+    }
+    input[type=range]:focus {
+    outline: none;
+    }
+    input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #FCBE00;
+    }
+</style>
+<style>
+    .wrapper {
+      overflow: hidden; /* This is to contain the floated elements within the wrapper */
+    }
+    .left {
+      float: left;
+    }
+    .right {
+      float: right;
+    }
+  </style>
+{% endblock css %}
+<!---------------------------------------------- Catagory Filter Start --------------------------------------->
+<div class="col-xl-3 col-lg-4">
+    <div class="product-widget mb-30">
+        <h5 class="pt-title">Product categories</h5>
+        <div class="widget-category-list mt-20">
+            {% for cat in cats %}
+            <div class="single-widget-category">
+                <input type="checkbox" data-filter="category" id="catagory-{{cat.id}}" value="{{cat.id}}" class="filter-checkbox">
+                <label for="catagory-{{cat.id}}">{{cat.name}} <span>( {{cat.products_set.all.count}} )</span> </label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+<!---------------------------------------------- Catagory Filter End --------------------------------------->
+
+<!---------------------------------------------- Brand Filter Start ------------------------------------->     
+    <div class="product-widget mb-30">
+        <h5 class="pt-title">Choose Brand</h5>
+        <div class="widget-category-list mt-20">
+            <div id="brands">
+                {% include "Products\shop\brands.html" %}
+            </div>
+        </div>
+    </div>
+<!---------------------------------------------- Brand Filter End -------------------------------------> 
+                                    
+<!---------------------------------------------- Price Filter Start --------------------------------------->
+<div class="product-widget mb-30">
+    <h5 class="pt-title">Filter By Price</h5>
+    <div class="price__slider mt-30">
+        <li class="list-group-item" style="height: 70px;">
+            <input type="range" class="multi-range success" id="rangeInput" style="color:red;" min="{{minMaxPrice.Price__min}}" max="{{minMaxPrice.Price__max}}" oninput="maxPrice.value=this.value" width="400px;" value="{{minMaxPrice.Price__min}}"/>
+            <div class="left">{{minMaxPrice.Price__min}}</div>
+            <div class="right">{{minMaxPrice.Price__max}}</div>
+        </li>
+        <li class="list-group-item">
+            Given Your Price: <input type="number" value="{{minMaxPrice.Price__max}}" max="{{minMaxPrice.Price__max}}" min="{{minMaxPrice.Price__min}}" class="form-control" id="maxPrice" onkeyup="rangeInput.value=this.value" />
+            <button type="submit" id="priceFilterBtn" class="btn btn-outline-warning btn-sm mt-4 ml-2">Filter</button>
+        </li>
+    </div>
+ </div>
+<!---------------------------------------------- Price Filter End --------------------------------------->
+
+
+
+    <!-- <div class="product-widget mb-30">
+        <h5 class="pt-title">Special Offers</h5>
+        <div class="product__sm mt-20">
+            <ul>
+                <li class="product__sm-item d-flex align-items-center">
+                    <div class="product__sm-thumb mr-20">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/product/sm-1.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="product__sm-content">
+                        <h5 class="product__sm-title">
+                            <a href="product-details.html">Classic Leather Backpack Daypack 2022</a>
+                        </h5>
+                        <div class="product__sm-price">
+                            <span class="price">$300.00</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="product__sm-item d-flex align-items-center">
+                    <div class="product__sm-thumb mr-20">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/product/sm-2.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="product__sm-content">
+                        <h5 class="product__sm-title">
+                            <a href="product-details.html">Samsung Galaxy A12, 32GB, Black - (Locked)</a>
+                        </h5>
+                        <div class="product__sm-price">
+                            <span class="price">$150.00</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="product__sm-item d-flex align-items-center">
+                    <div class="product__sm-thumb mr-20">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/product/sm-3.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="product__sm-content">
+                        <h5 class="product__sm-title">
+                            <a href="#">Coffee Maker AH240a Full Function</a>
+                        </h5>
+                        <div class="product__sm-price">
+                            <span class="price">$300.00</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="product__sm-item d-flex align-items-center">
+                    <div class="product__sm-thumb mr-20">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/product/sm-4.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="product__sm-content">
+                        <h5 class="product__sm-title">
+                            <a href="product-details.html">Imported Wooden Felt Cushion Chair</a>
+                        </h5>
+                        <div class="product__sm-price">
+                            <span class="price">$120.00</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="product__sm-item d-flex align-items-center">
+                    <div class="product__sm-thumb mr-20">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/product/sm-5.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="product__sm-content">
+                        <h5 class="product__sm-title">
+                            <a href="product-details.html">Sunhouse Decorative Lights - Imported</a>
+                        </h5>
+                        <div class="product__sm-price">
+                            <span class="price">$110.00</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div> -->
+</div>

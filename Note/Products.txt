@@ -1,0 +1,22 @@
+class Products(model.Model):
+	total_quanttity =
+	Availability=
+	featured_image=
+	product_name=
+	price=
+	discount=
+	product_Informations=
+	categories=
+	tags=
+	description=
+	section= models.ForeignKey(Sections, on_delete=model.DO_NOTHING)
+
+class Product_Image(model.Model):
+	product =model.ForeginKey(Product, on_delete=model.CASCADE)
+	Image_url=m
+
+class Aditional_Information(model.Model):
+	product =model.ForeginKey(Product, on_delete=model.CASCADE)
+	key =
+	value =
+

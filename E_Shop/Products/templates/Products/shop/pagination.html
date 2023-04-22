@@ -1,0 +1,55 @@
+{%  load static%}
+
+<div class="tp-pagination text-center">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="basic-pagination pt-30 pb-30">
+                <nav>
+                    {% if page_obj.has_other_pages %}
+                    <ul>
+
+                        {% if page_obj.has_previous %}
+                            <li>
+                                <a href="?page=1" class="">First</a>
+                            </li>
+                            <li>
+                                <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                            </li>
+                        {% else %}
+                            <li class="disable"></li>
+                        {% endif %}
+
+
+                        {% for i in page_obj.paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li>
+                                    <a class="active">{{i}}</a>
+                                </li>
+                            {% else %}
+                                <li class="">
+                                    <a class="" href="?page={{i}}">{{i}}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+
+                        {% if page_obj.has_next %}
+                            <li class="">
+                                <a class="" href="?page={{ page_obj.next_page_number }}">
+                                <i class="fal fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                            </li>
+                        {% else %}
+                            <li class=" disable"></li>
+                        {% endif %}
+                        
+                    </ul>
+                    {% endif %}
+                 </nav>
+             </div>
+        </div>
+    </div>
+</div>

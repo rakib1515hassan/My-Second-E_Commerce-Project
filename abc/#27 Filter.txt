@@ -1,0 +1,121 @@
+Aajx Link
+------------
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	$(".filter-checkbox").on('click', function(){
+		var filter_object={};
+		$(".filter-checkbox").each(function(index,ele){
+			var filter_value=$(this).val();
+			var filter_key=$(this).data('filter');
+			console.log(filter_key,filter_value);
+			filter_object[filter_key]=Array.from(document.querySelectorAll('input[data-filter='+filter_key+']:checked')).map(function(el){
+			 	return el.value;
+			});
+		});
+		$.ajax({
+			url:'{% filter-data %}',
+			data:filter_object,
+			dataType:'json',			
+			success:function(res){				
+				$("#filteredProducts").html(res.data);				
+			}
+		});
+	});
+});
+</script>
+
+
+urls.py
+-----------------
+path('product/filter-data',views.filter_data,name="filter-data"),
+
+views.py
+-----------------
+def filter_data(request):
+    categories = request.GET.getlist('category[]')
+    brands = request.GET.getlist('brand[]')
+
+    allProducts = Product.objects.all().order_by('-id').distinct()
+    if len(categories) > 0:
+        allProducts = allProducts.filter(Categories__id__in=categories).distinct()
+
+    if len(brands) > 0:
+        allProducts = allProducts.filter(Brand__id__in=brands).distinct()
+
+
+    t = render_to_string('ajax/product-list.html', {'product': allProducts})
+
+    return JsonResponse({'data': t})
+	
+templates
+-ajax
+--product.html
+
+	
+
+product.html
+--------------
+{% for i in category %}
+<div class="single-widget-category">
+   <input type="checkbox" data-filter="category" id="{{i.id}}" value="{{i.id}}" class="filter-checkbox">
+   <label for="{{i.id}}">{{i.name}} <span>({{i.product_set.all.count}})</span></label>
+</div>
+{% endfor %}
+
+
+{% for i in product %}
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+   <div class="product__item product__item-d">
+      <div class="product__thumb fix">
+         <div class="product-image w-img">
+            <a href="product-details.html">
+            <img src="{{i.featured_image}}" alt="product" height="200px">
+            </a>
+         </div>
+         <div class="product-action">
+            <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
+            <i class="fal fa-eye"></i>
+            <i class="fal fa-eye"></i>
+            </a>
+            <a href="#" class="icon-box icon-box-1">
+            <i class="fal fa-heart"></i>
+            <i class="fal fa-heart"></i>
+            </a>
+            <a href="#" class="icon-box icon-box-1">
+            <i class="fal fa-layer-group"></i>
+            <i class="fal fa-layer-group"></i>
+            </a>
+         </div>
+      </div>
+      <div class="product__content-3">
+         <h6><a href="product-details.html">{{i.product_name|truncatechars:40}}</a></h6>
+         <div class="rating mb-5">
+            <ul>
+               <li><a href="#"><i class="fal fa-star"></i></a></li>
+               <li><a href="#"><i class="fal fa-star"></i></a></li>
+               <li><a href="#"><i class="fal fa-star"></i></a></li>
+               <li><a href="#"><i class="fal fa-star"></i></a></li>
+               <li><a href="#"><i class="fal fa-star"></i></a></li>
+            </ul>
+            <span>(01 review)</span>
+         </div>
+         <div class="price mb-10">
+            <span>${{i.price}}</span>
+         </div>
+      </div>
+      <div class="product__add-cart-s text-center">
+         <button type="button" class="cart-btn d-flex mb-10 align-items-center justify-content-center w-100">
+         Add to Cart
+         </button>
+         <button type="button" class="wc-checkout d-flex align-items-center justify-content-center w-100" data-bs-toggle="modal" data-bs-target="#productModalId">
+         Quick View
+         </button>
+      </div>
+   </div>
+</div>
+{% endfor %}
+
+

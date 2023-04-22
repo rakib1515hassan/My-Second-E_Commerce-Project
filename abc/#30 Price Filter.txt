@@ -1,0 +1,71 @@
+product.html
+---------------
+
+<style>
+   input[type=range]{
+   -webkit-appearance: none;
+   width:100%;
+   }
+   input[type=range]::-webkit-slider-runnable-track {
+   width: 1000px;
+   height: 5px;
+   background: #FCBE00;
+   border: none;
+   border-radius: 3px;
+   }
+   input[type=range]::-webkit-slider-thumb {
+   -webkit-appearance: none;
+   border: none;
+   height: 16px;
+   width: 16px;
+   border-radius: 50%;
+   background: goldenrod;
+   margin-top: -5px;
+   }
+   input[type=range]:focus {
+   outline: none;
+   }
+   input[type=range]:focus::-webkit-slider-runnable-track {
+   background: #FCBE00;
+   }
+</style>
+
+<div class="product-widget mb-30">
+   <h5 class="pt-title">Filter By Price</h5>
+   <div class="price__slider mt-30">
+      <input type="range" class="multi-range success" style="color:red;" value="{{FilterPrice}}" min="{{min_price.price__min}}" max="{{max_price.price__max}}" id="rangeInput" oninput="maxPrice.value=this.value" width="400px;"/>
+	<input type="range" class="multi-range success" style="color:red;" value="{{FilterPrice}}" min="{{min_price.Price__min}}" max="{{max_price.Price__max}}" id="rangeInput" oninput="maxPrice.value=this.value" width="400px;"/>
+      <div>
+         <form action="" class="s-form mt-20" method="get">
+            <b>₹</b><input type="number" id="maxPrice" readonly="" name="FilterPrice" onkeyup="rangeInput.value=this.value" value={{FilterPrice}}{{minMaxPrice.price__min}}>
+            <button type="submit" id="priceFilterBtn" class="tp-btn-square-lg">Filter</button>
+         </form>
+      </div>
+   </div>
+</div>
+
+
+views.py
+----------
+from django.db.models import Max, Min
+
+
+# filter by price
+    min_price = Product.objects.all().aggregate(Min('price'))
+    max_price = Product.objects.all().aggregate(Max('price'))
+    print(min_price)
+    print(max_price)
+
+    FilterPrice = request.GET.get('FilterPrice')
+    if FilterPrice:
+        Int_FilterPrice = int(FilterPrice)
+        product = Product.objects.filter(price__lte = Int_FilterPrice)
+    else:
+        product = Product.objects.all()
+		
+	context  = {
+        
+        'min_price':min_price,
+        'max_price':max_price,
+		'FilterPrice':FilterPrice,
+    }	

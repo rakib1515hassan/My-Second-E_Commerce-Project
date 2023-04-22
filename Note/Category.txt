@@ -1,0 +1,76 @@
+Main Categorys:
+	
+	1. Food 
+	2. Cleaning Supplies
+	3. Personal Care
+	4. Health & Wellness
+	5. Home & Kitchen
+	6. Stationery & Office
+	7. Pet Care
+	8. Toys & Sports
+	9. Beauty & MakeUp
+	10. Fashion & Lifestyle
+
+Categorys:
+	Food:
+		1. Fruits & Vegetables (Fresh Vegetables, Fresh Fruits)
+		2. Meat & Fish (Chicken & Poultry, Frozen Fish,Meat)
+		3. Cooking (Spices,Salt & Sugar,Rice, Oil, )
+		4. Sauces & Pickles (Tomato Sauces,Pickles,Cooking Sauces )
+		5. Dairy & Eggs (Eggs,Powder Milk,Liquid & UHT Milk
+			,Condensed Milk & Cream)
+		6. Candy & Chocolate (Chocolates, Candies, Gums, Mints & Mouth Fresheners)
+
+	Cleaning Supplies:
+		1. Dishwashing Supplies
+		2. Laundry
+		3. Toilet Cleaners
+		4. Napkins & Paper Products
+		5. Air Fresheners
+
+	Personal Care:
+		1. Women's Care(Hair Care, Women's Soaps,
+			Women's Shampoos & Conditioners,Feminine Care,Women's Perfume)
+		2. Men's Care (Razors & Blades,Men's Facewash, Cream & Lotion)
+		3. Babe Care (Diapers, Baby Food,Baby Accessories, Feeders )
+		4. Handwash
+		5. Tissue & Wipes
+		6. Skin Care
+
+	Health & Wellness:
+		1. Antiseptics 
+		2. Handwash & Handrub
+		3. Food Supplements
+		4. Face Masks & Safety
+
+	Home & Kitchen:
+		1. Kitchen Accessories
+		2. Basket & Bucket
+		3. Rack & Organizer
+	Stationery & Office:
+		1. Office Electronics
+		2. Paper Supplies
+		3. Writing & Printing
+		4. School Supplies
+		5. Arts & Crafts
+
+	Pet Care:
+		1. Cat Food
+		2. Dog Food
+		3. Aquarium Fish Food
+
+	Toys & Sports:
+		1. Plush & Stuffed Animals
+		2. Sports
+
+	Beauty & MakeUp:
+		1. Eyes
+		2. Lips
+		3. Nails
+		4. Face
+
+ 	Fashion & Lifestyle:
+		1. Women's Fashion
+		2. Men's Fashion 
+		3. Baby's Fashion
+
