@@ -18,6 +18,12 @@ class Products_Admin(admin.ModelAdmin):
     list_editable = ('category', 'section')
     class Media:
         js=("admin.js",)
+## এটিকে ব্যবহার করা হয়েছে জতে Discount_Price টিকে admin pannel থেকে ইনপুট না নিতে হয়
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ['Discount_Price']
+        else:
+            return []
 
 
 admin.site.register(Section)

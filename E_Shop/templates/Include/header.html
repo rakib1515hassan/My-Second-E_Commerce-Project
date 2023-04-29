@@ -1,6 +1,6 @@
 {% load static %}
 <header class="header d-blue-bg">
-        <div class="header-top">
+        <div class="header-top" style="background-color: #0d6efd00; padding: 0px !important; height: 32px !important;">
             <div class="container">
                 <div class="header-inner">
                     <div class="row align-items-center">
@@ -38,6 +38,7 @@
                             <div class="header-inner-end text-md-end">
                                 <div class="ovic-menu-wrapper">
                                     <ul>
+                                        <li><a href="{% url 'seller_reg' %}">To Sell Products</a></li>
                                         <li><a href="about.html">About Us</a></li>
                                         <li><a href="contact.html">Order Tracking</a></li>
                                         <li><a href="contact.html">Contact Us</a></li>
@@ -85,33 +86,46 @@
                             <div class="header-action" style="margin-bottom:26px!important;">
 <!------------------------------------------- Account Section start   ---------------------------------------->                                
                                 <div class="block-userlink action" >
-                                        <!-- <div class="profile" onclick="menuToggle();">
-                                            <img src="{% static 'assets/img/custom/user.png' %}" class="img" alt="">
-                                            <span>User</span>
-                                        </div> -->
-
                                         <div onclick="menuToggle();">
-                                            <a class="icon-link">
-                                                <i class="flaticon-user"></i>
-                                                <span class="text">
-                                                    <span class="sub">Logout </span>
-                                                Md Rakib Hassan
-                                            </span>
-                                            </a>
+                                            {% if user.is_authenticated %}
+                                                <a class="icon-link">
+                                                    <i class="flaticon-user"></i>
+                                                    <span class="text">
+                                                        <span class="sub mb-1">Logout </span>
+                                                    {{user.get_full_name}}
+                                                </span>
+                                                </a>
+                                            {% else %}
+                                                <a class="icon-link">
+                                                    <i class="flaticon-user"></i>
+                                                    <span class="text">
+                                                        <span class="sub mb-1">Login</span>
+                                                    My Account
+                                                </span>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                         
                                         <div class="menu">
                                             <ul class="ul">
+                                            {% if user.is_authenticated %}
                                                 <li class="li">
-                                                    <a href="{% url 'login' %}" class="a">Login</a>
+                                                    <a href="{% url 'user_profile' %}" class="a">{{user.get_full_name}}</a>
                                                 </li>
                                                 <li class="li">
-                                                    <a href="{% url 'registration' %}" class="a">Registion</a>
+                                                    <a href="{% url 'user_logout' %}" class="a">Logout</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="li">
+                                                    <a href="{% url 'user_login' %}" class="a">Login</a>
+                                                </li>
+                                                <li class="li">
+                                                    <a href="{% url 'customer_reg' %}" class="a">Customer Registion</a>
                                                 </li>
                                                 <li class="li">
                                                     <a href="#" class="a">Forget password</a>
                                                 </li>
-                                                
+                                            {% endif %}
                                             </ul>
                                         </div>
                                 </div>  
@@ -193,10 +207,10 @@
                                 <button type="button" class="cat-toggle-btn cat-toggle-btn-1"><i class="fal fa-bars"></i> Shop by department</button>
                                 <div class="cat__menu">
                                     <nav id="mobile-menu" style="display: block;">
-                                        <ul>
+                                        <ul class="main_ul">
                                             {% for i in main_cats %}
-                                            <li>
-                                                <a href="{% url 'products_show' i.id %}">{{i.name}}<i class="far fa-angle-down"></i></a>
+                                            <li class="main_li">
+                                                <a class="main_a" href="{% url 'products_show' i.id %}">{{i.name}}<i class="far fa-angle-down"></i></a>
                                                 <ul class="mega-menu">
                                                     {% for cat in i.Category.all %}
                                                     <li><a href="{% url 'products_show' i.id cat.id %}">{{cat.name}}</a>

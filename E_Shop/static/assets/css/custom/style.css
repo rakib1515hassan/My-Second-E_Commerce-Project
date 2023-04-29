@@ -36,7 +36,7 @@
     padding: 10px 20px;
     position: absolute;
     right: -10px;
-    width: 200px;
+    width: 220px;
     transition: 0.5s;
     top: 120px;
     visibility: hidden;
@@ -93,7 +93,7 @@
     font-weight: 600;
     padding-left: 15px;
     text-decoration: none;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     transition: 0.5s;
 }
 .action .menu .ul .li:hover img{

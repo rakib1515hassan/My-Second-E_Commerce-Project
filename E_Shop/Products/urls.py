@@ -6,7 +6,7 @@ urlpatterns = [
     path("base/", base, name="base"),
 
 
-    #path("", home, name="home"),
+    # path("", home, name="home"),
     path("", home.as_view(), name="home"),
 
 

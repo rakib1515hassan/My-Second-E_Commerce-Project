@@ -37,24 +37,25 @@ def base(request):
 # Function
 
 # def home(request):
-#     main_cats = Main_Category.objects.all()
-#     product = Products.objects.filter(section__name="Top Deals Of The Day")
-#     product_sell = Products.objects.filter(section__name="Top Selling Products")
-#     product_Recommended = Products.objects.filter(section__name="Recommended For You")
+    # main_cats = Main_Category.objects.all()
+    # product = Products.objects.filter(section__name="Top Deals Of The Day")
+    # product_sell = Products.objects.filter(section__name="Top Selling Products")
+    # product_Recommended = Products.objects.filter(section__name="Recommended For You")
 
-#     shop = Main_Category.objects.all()[:5]
+    # shop = Main_Category.objects.all()[:5]
 
 
-#     context = {
-#         "main_cats": main_cats,
-#         "product": product,
-#         "product_sell": product_sell,
-#         "product_Recommended": product_Recommended,
-#         "shop": shop,
-#     }
-#     return render(request, "home.html", context)
+    # context = {
+    #     "main_cats": main_cats,
+    #     "product": product,
+    #     "product_sell": product_sell,
+    #     "product_Recommended": product_Recommended,
+    #     "shop": shop,
+    # }
+    # return render(request, "home.html", context)
 
-# Class Base View
+
+### Class Base View
 class home(TemplateView):
     template_name = "home.html"
 
@@ -64,6 +65,9 @@ class home(TemplateView):
         # Pass data by template_context.py ---------------------------------------------------------
         # data['main_cats'] = Main_Category.objects.all()
         # data['product'] = Products.objects.filter(section__name="Top Deals Of The Day")
+        # print("-----------------------------")
+        # print(data['product'])
+        # print("-----------------------------")
         # data['product_sell'] = Products.objects.filter(section__name="Top Selling Products")
         # data['product_Recommended'] = Products.objects.filter(section__name="Recommended For You")
 
@@ -401,4 +405,7 @@ class filter_data(ListView):
 
     #     # Return the data as a JSON response
     #     return JsonResponse(data)
+
+
+
 

@@ -4,6 +4,7 @@ from .models import Main_Category, Products, Category, Sub_Category
 from django.db.models import Max, Min, Avg, Sum
 
 def common(request):
+    pass
     main_cats = Main_Category.objects.all()
     cats =Category.objects.all()
     sub_cats =Sub_Category.objects.all()

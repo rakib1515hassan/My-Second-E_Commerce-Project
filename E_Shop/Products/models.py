@@ -45,25 +45,29 @@ class Section(models.Model):
 
 
 class Products(models.Model):
-    Total_quantity = models.IntegerField(default=1)
-    Availability = models.IntegerField(default=1)
-    Image = models.CharField(max_length=200)
-    Product_name = models.CharField(max_length=100)
-    Price = models.IntegerField(default=0)
-    Discount_Price = models.IntegerField(default=0)
-    Discount = models.IntegerField(default=0)
+    Total_quantity      = models.IntegerField(default=1)
+    Availability        = models.IntegerField(default=1)
+    Image               = models.CharField(max_length=200)
+    Product_name        = models.CharField(max_length=100)
+    Price               = models.IntegerField(default=0)
+    Discount_Price      = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    Discount            = models.IntegerField(default=0)
     Product_information = RichTextField(null=True, blank=True)
-    Tags = models.CharField(max_length=100, null=True, blank=True)
-    Description = RichTextField(null=True, blank=True)
+    Tags                = models.CharField(max_length=100, null=True, blank=True)
+    Description         = RichTextField(null=True, blank=True)
 
-    slug = models.SlugField(default='', max_length=500, null=True, blank=True)
-    main_category = models.ForeignKey(Main_Category, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    sub_category = models.ForeignKey(Sub_Category, on_delete=models.CASCADE, null=True, blank=True)
-    section = models.ForeignKey(Section, on_delete=models.DO_NOTHING)
+    slug                = models.SlugField(default='', max_length=500, null=True, blank=True)
+    main_category       = models.ForeignKey(Main_Category, on_delete=models.CASCADE)
+    category            = models.ForeignKey(Category, on_delete=models.CASCADE)
+    sub_category        = models.ForeignKey(Sub_Category, on_delete=models.CASCADE, null=True, blank=True)
+    section             = models.ForeignKey(Section, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.Product_name
+    
+    def save(self, *args, **kwargs):
+        self.Discount_Price = self.Price - (self.Price * self.Discount / 100)
+        super(Products, self).save(*args, **kwargs)
 # --------------------------------For Add Slug Fild in Model Start------------------------------------------
     def get_absolute_url(self):
         from django.urls import reverse
@@ -93,13 +97,13 @@ pre_save.connect(pre_save_post_receiver, Products)
 # --------------------------------For Add Slug Fild in Model End------------------------------------------
 
 class Product_Images(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="Product_Images")
+    product   = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="Product_Images")
     Image_url = models.CharField(max_length=200, null=True, blank=True)
 
 
 class Additional_Information(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="Additional_Information")
+    product       = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="Additional_Information")
     Specification = models.CharField(max_length=100, null=True, blank=True)
-    detail = models.CharField(max_length=100, null=True, blank=True)
+    detail        = models.CharField(max_length=100, null=True, blank=True)
 
 # ------------------------All Products End-------------------------------------------------------------------------------
