@@ -7,20 +7,19 @@
 
 
 <!-- log in section start -->
-<section class="log-in-section section-b-space">
+<section class="log-in-section section-b-space mt-4 mb-4">
     <div class="container-fluid-lg w-100">
         <div class="row">
             <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
                 <div class="image-contain">
-                    <img src="{% static 'assets1/images/inner-page/sign-up.png' %}" class="img-fluid" alt="">
+                    <img src="{% static 'assets\img\Auth\Seller_info2.jpeg' %}" class="img-fluid" alt="">
                 </div>
             </div>
 
             <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
                 <div class="log-in-box">
                     <div class="log-in-title">
-                        <h3 class="text-center">Welcome To Seller Account</h3>
-                        <h4 class="text-center">Create New Account</h4>
+                        <h3 class="text-center">Add Seller Aditional Informations</h3>
                     </div>
 
                     <div class="input-box">
@@ -28,27 +27,33 @@
                         <form class="row g-4" action="{% url 'seller_info' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="col-12">
-                                <div class="form-floating theme-form-floating">
+                                <div class="form-floating theme-form-floating" style="margin-top: 20px;">
                                     <input type="text" class="form-control" id="shop_name" placeholder="Shop Name" required name="shop_name">
                                     <label for="shop_name">Shop Name</label>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="file" class="form-control" id="tread_licence" placeholder="Tread Licence" required name="tread_licence">
+                                <div>
                                     <label for="tread_licence">Tread Licence Scanning Copy</label>
+                                    <input type="file" class="form-control" id="tread_licence" placeholder="Tread Licence" required name="tread_licence">                                   
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="file" class="form-control" id="nid" placeholder="NID Copy" required name="nid">
+                                <div>
                                     <label for="nid">NID Scanning Copy</label>
+                                    <input type="file" class="form-control" id="nid" placeholder="NID Copy" required name="nid">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="address">Give Your Shop Address:</label>
+                                <div class="form-group">
+                                    <textarea id="address" name="address" rows="5" cols="40" class="form-control"></textarea>
                                 </div>
                             </div>                    
 
                             <div class="col-12">
                                 <input type="hidden" name="user" value="{{user.email}}">
-                                <button class="btn btn-animation w-100" type="submit">Submit</button>
+                                <button class="btn btn-primary mt-2 w-100 justify-content-center" type="submit">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -59,8 +64,8 @@
                     </div>
 
                     <div class="sign-up-box">
-                        <h4>Already have an account?</h4>
-                        <a href="{% url 'user_login' %}">Log In</a>
+                        <h4 class="text-center">Already have an account?</h4>
+                        <a href="{% url 'user_login' %}" class="btn btn-outline-info mt-2 w-100 justify-content-center">Log In</a>
                     </div>
                 </div>
             </div>
@@ -74,3 +79,19 @@
 
 
 {% endblock body%}
+
+{% block css %}
+<style>
+.log-in-box {
+    background-color: #f8f8f8;
+    padding: calc(16px + 34*(100vw - 320px)/1600);
+    border-radius: calc(8px + 4*(100vw - 320px)/1600);
+}
+.forgot-password {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline;
+    color: red;
+}
+</style>
+{% endblock css %}

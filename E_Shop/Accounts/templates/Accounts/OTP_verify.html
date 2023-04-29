@@ -4,13 +4,12 @@
 
 {% block body%}
     <!-- log in section start -->
-    <h2 class="text-center mt-3"><u><b>One-time password Verification</b></u></h2>
-    <section class="log-in-section otp-section section-b-space" style="margin-top: 8%;">
+    <section class="log-in-section otp-section section-b-space" style="margin-top: 50px; margin-bottom: 200px;">
         <div class="container-fluid-lg">
             <div class="row">
                 <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
                     <div class="image-contain">
-                        <img src="{% static 'assets1/images/inner-page/otp.png' %}" class="img-fluid" alt="">
+                        <img src="{% static 'assets\img\Auth\OTP_Send.jpeg' %}" class="img-fluid" alt="">
                     </div>
                 </div>
 
@@ -18,8 +17,8 @@
                     <div class="d-flex align-items-center justify-content-center h-100">
                         <div class="log-in-box" style="width: 1000px;">
                             <div class="log-in-title">
-                                <h3 class="text-title">Please enter OTP to verify your account</h3>
-                                <h5 class="text-content">A code has been sent to <b>{{user.email}}</b></h5>
+                                <h3 class="text-title text-center">Please enter OTP to verify your account</h3>
+                                <h5 class="text-content text-center">A code has been sent to <b style="color: red;">{{user.email}}</b></h5>
                             </div>
                             <div id="otp" class="inputs d-flex flex-row justify-content-center">
                                 <form class="row g-4" action="{% url 'otp_verify' %}" method="POST">
@@ -33,7 +32,7 @@
                                       </div>
                                    </div>
                                    <div class="col-12">
-                                      <button class="btn btn-animation w-100 mt-3" type="submit">Validate</button>
+                                      <button class="btn btn-primary w-100 justify-content-center" type="submit">Validate</button>
                                    </div>
     
                                 </form>
@@ -61,7 +60,7 @@
                                 </a> -->
                                 <form action="{% url 'resend_OTP' %}" method="GET">
                                     <input type="hidden" name="otp" value="{{user.email}}">
-                                    <button type="submit" class="theme-color fw-bold">Resend OTP</button>
+                                    <button type="submit" class="theme-color fw-bold" style="color: red;">Resend OTP</button>
                                 </form>
                                 
                             </div>
@@ -77,3 +76,20 @@
     <!-- log in section end -->
 
 {% endblock body%}
+
+
+{% block css %}
+<style>
+.log-in-box {
+    background-color: #f8f8f8;
+    padding: calc(16px + 34*(100vw - 320px)/1600);
+    border-radius: calc(8px + 4*(100vw - 320px)/1600);
+}
+.forgot-password {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline;
+    color: red;
+}
+</style>
+{% endblock css %}

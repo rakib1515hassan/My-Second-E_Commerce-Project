@@ -30,10 +30,10 @@ def customer_reg(request):
         password = request.POST["password"]
         Confirm_Password = request.POST["c_password"]
 
-        print("--------------------------------------------")
-        print("Customer Account")
-        print(f"First Name:{First_Name}, Last Name: {Last_Name}, Email: {Email_Address}, Password: {password}, Confirm Password: {Confirm_Password}")
-        print("--------------------------------------------")
+        # print("--------------------------------------------")
+        # print("Customer Account")
+        # print(f"First Name:{First_Name}, Last Name: {Last_Name}, Email: {Email_Address}, Phone: {Phone_Number}, Password: {password}, Confirm Password: {Confirm_Password}")
+        # print("--------------------------------------------")
 
         if password == Confirm_Password:
             if User.objects.filter(email=Email_Address).exists():
@@ -318,19 +318,21 @@ def resend_OTP(request):
 def seller_info(request):
     if request.method == "POST":
         usr_email = request.POST.get('user')
-        shop_name = request.POST.get('shop_name')
+        shop_nam = request.POST.get('shop_name')
         tread_licence = request.FILES.get('tread_licence')
         nid = request.FILES.get('nid')
-        # print('-----------------------------')
-        # print(usr_email,shop_name,tread_licence,nid)
-        # print('-----------------------------')
+        address = request.POST.get('address')
+        print('-----------------------------')
+        print(usr_email,shop_nam,tread_licence,nid, address)
+        print('-----------------------------')
         usr = User.objects.get(email = usr_email)
         seller = Seller.objects.get(user = usr)
         if seller:
             # seller.objects.create(shope_name = shop_name,Trade_license = tread_licence, Owner_NID = nid)
-            seller.shope_name = shop_name
+            seller.shop_name = shop_nam
             seller.Trade_license = tread_licence
             seller.Owner_NID = nid
+            seller.shop_address = address
             seller.save()
             mess = f"Hello {usr.first_name}{usr.last_name},\nPlease wait patiently, we will verify your information and activate your account. Thank you!"
             send_mail(
@@ -340,7 +342,7 @@ def seller_info(request):
                 [usr.email],
                 fail_silently = False
                 )
-            return HttpResponse("<h1 style='text-align: center; color: red; padding-top: 20px; margin-top: 50px;'>Please wait patiently, we will verify your information and activate your account. Thank you!</h1>")
+            return render(request, 'Accounts/s_seller_waiting_page.html')
 
     return render(request, "Accounts/s_registration_2.html")
 

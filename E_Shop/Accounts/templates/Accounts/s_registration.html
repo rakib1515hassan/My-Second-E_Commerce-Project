@@ -7,101 +7,123 @@
 
 
 <!-- log in section start -->
-<section class="log-in-section section-b-space">
-    <div class="container-fluid-lg w-100">
-        <div class="row">
-            <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
-                <div class="image-contain">
-                    <img src="{% static 'assets1/images/inner-page/sign-up.png' %}" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
-                <div class="log-in-box">
-                    <div class="log-in-title">
-                        <h3 class="text-center">Welcome To Seller Account</h3>
-                        <h4 class="text-center">Create New Account</h4>
+<div class="container">
+    <!-- Registration section start -->
+    <section class="log-in-section section-b-space ">
+        <div class="container-fluid-lg w-100" style="margin-bottom: 50px; margin-top: 50px; margin-right: 300px;">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
+                    <div class="image-contain">
+                        <img src="{% static 'assets\img\Auth\Seller_Registration.jpeg' %}" class="img-fluid" alt="">
                     </div>
+                </div>
 
-                    <div class="input-box">
-                        {% include 'message.html' %}
-                        <form class="row g-4" method="POST">
-                            {% csrf_token %}
-                            <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="text" class="form-control" id="fullname" placeholder="Full Name" required name="first_name">
-                                    <label for="first_name">First Name</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="text" class="form-control" id="fullname" placeholder="Full Name" required name="last_name">
-                                    <label for="last_name">Last Name</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Email Address" required name="email">
-                                    <label for="email">Email Address</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="text" class="form-control" id="phone" placeholder="Phone Number" required name="phone">
-                                    <label for="phone">Phone Number</label>
-                                </div>
-                            </div>
+                <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
+                    <div class="log-in-box">
+                        <div class="log-in-title">
+                            <h3 class="text-center">Welcome To Seller Account</h3>
+                            <h4 class="text-center">Create New Account</h4>
+                        </div>
 
-                            <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="password" class="form-control" id="password"
-                                        placeholder="Password" required name="password">
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating theme-form-floating">
-                                    <input type="password" class="form-control" id="password"
-                                        placeholder="Password" required name="c_password">
-                                    <label for="c_password">Confirm Password</label>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="forgot-box">
-                                    <div class="form-check ps-0 m-0 remember-box">
-                                        <input class="checkbox_animated check-box" type="checkbox"
-                                            id="flexCheckDefault" required>
-                                        <label class="form-check-label" for="flexCheckDefault">I agree with
-                                            <span>Terms</span> and <span>Privacy</span></label>
+                        <div class="input-box">
+                            {% include 'message.html' %}
+                            <form class="row g-4" method="POST">
+                                {% csrf_token %}
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="text" class="form-control" id="fullname" placeholder="Full Name" required name="first_name">
+                                        <label for="first_name">First Name</label>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="text" class="form-control" id="fullname" placeholder="Full Name" required name="last_name">
+                                        <label for="last_name">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Email Address" required name="email">
+                                        <label for="email">Email Address</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="text" class="form-control" id="phone" placeholder="Phone Number" required name="phone">
+                                        <label for="phone">Phone Number</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="password" class="form-control" id="password"
+                                            placeholder="Password" required name="password">
+                                        <label for="password">Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        <input type="password" class="form-control" id="password"
+                                            placeholder="Password" required name="c_password">
+                                        <label for="c_password">Confirm Password</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="forgot-box">
+                                        <div class="form-check ps-0 m-0 remember-box">
+                                            <input class="checkbox_animated check-box" type="checkbox"
+                                                id="flexCheckDefault" required>
+                                            <label class="form-check-label" for="flexCheckDefault">I agree with
+                                                <span>Terms</span> and <span>Privacy</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 justify-content-center" type="submit">Sign Up</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="other-log-in">
+                            <h6></h6>
+                        </div>
+
+                        <div class="sign-up-box">
+                            <h4 class="text-center">Already have an account?</h4>
+                            <div class="d-flex justify-content-center">
+                                <a href="{% url 'user_login' %}" class="btn btn-outline-info mt-2 w-100 justify-content-center" >Login</a>
                             </div>
-
-                            <div class="col-12">
-                                <button class="btn btn-animation w-100" type="submit">Sign Up</button>
-                            </div>
-                        </form>
-                    </div>
-
-
-                    <div class="other-log-in">
-                        <h6></h6>
-                    </div>
-
-                    <div class="sign-up-box">
-                        <h4>Already have an account?</h4>
-                        <a href="{% url 'user_login' %}">Log In</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-xxl-7 col-xl-6 col-lg-6"></div>
+                <div class="col-xxl-7 col-xl-6 col-lg-6"></div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+    <!-- Registration section end -->
+</div>
 <!-- log in section end -->
 
 
 
 {% endblock body%}
+
+
+{% block css %}
+<style>
+.log-in-box {
+    background-color: #f8f8f8;
+    padding: calc(16px + 34*(100vw - 320px)/1600);
+    border-radius: calc(8px + 4*(100vw - 320px)/1600);
+}
+.forgot-password {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline;
+    color: red;
+}
+</style>
+{% endblock css %}
