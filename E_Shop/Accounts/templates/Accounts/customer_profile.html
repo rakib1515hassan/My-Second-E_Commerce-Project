@@ -1,0 +1,617 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Customer | Profile{% endblock title %}
+
+{% block body%}
+    
+    <!-- User Dashboard Section Start -->
+    <section class="py-5 my-3" style="margin-top: -10px;">
+		<div class="container">
+			<div class="bg-white shadow rounded-lg d-block d-sm-flex">
+				<div class="profile-tab-nav border-right">
+                    <!---------------------------- Cover Photo Start --------------------------->
+					<div class="p-3 backgroun_img">
+						<div>
+                            {% if customer.cover_pictur %}
+                                <img src="{{customer.cover_pictur.url}}" style="width: 300px; height: 150px; border-radius: 5px;" alt="Image" class="shadow">
+                            {% else %}
+                                <img src="{% static 'assets\img\default_image\cover_pic.jpeg' %}" style="width: 300px; height: 150px; border-radius: 5px;" alt="Image" class="shadow">
+                            {% endif %}
+                        </div>
+                       <div class="cover_photo">
+                        <button type="button" data-toggle="modal" data-target="#editCovPic"><i
+                            class="fa fa-camera" aria-hidden="true"></i></button>
+                       </div>
+					</div>
+                    <!---------------------------- Cover Photo End --------------------------->
+
+					<div class="p-4">
+                        <!---------------------------- Prifile Photo Start --------------------------->
+						<div class="img-circle text-center mb-3">
+							{% if customer.profile_pictur %}
+                                <img src="{{customer.profile_pictur.url}}" alt="Image" class="shadow">
+                            {% else %}
+                                <img src="{% static 'assets\img\default_image\default_pic.jpg' %}" alt="Image" class="shadow">
+                            {% endif %}
+                            <button type="button" data-toggle="modal" data-target="#editProPic"><i
+                                class="fa fa-camera" aria-hidden="true"></i></button>
+						</div>
+                        <!---------------------------- Prifile Photo Start --------------------------->
+
+
+						<h3 class="text-center pro_head">{{user.get_full_name}}</h3>
+						<p style="font-size: 20px;" class="text-center">{{user.email}}</p>
+					</div>
+					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						<a class="nav-link active" id="Dashboard-tab" data-toggle="pill" href="#Dashboard" role="tab" aria-controls="Dashboard" aria-selected="true">
+							<i class="fa fa-home text-center mr-1"></i> 
+							Dashboard
+						</a>
+						<a class="nav-link" id="Orders-tab" data-toggle="pill" href="#Orders" role="tab" aria-controls="Orders" aria-selected="false">
+							<i class="fa fa-shopping-basket" aria-hidden="true"></i> 
+							Orders
+						</a>
+						<a class="nav-link" id="Wishlist-tab" data-toggle="pill" href="#Wishlist" role="tab" aria-controls="Wishlist" aria-selected="false">
+							<i class="fa fa-heart-o" aria-hidden="true"></i> 
+							Wishlist 
+						</a>
+						<a class="nav-link" id="Address-tab" data-toggle="pill" href="#Address" role="tab" aria-controls="Address" aria-selected="false">
+							<i class="fa fa-address-book-o" aria-hidden="true"></i> 
+							Address 
+						</a>
+						<a class="nav-link" id="Profile-tab" data-toggle="pill" href="#Profile" role="tab" aria-controls="Profile" aria-selected="false">
+							<i class="fa fa-user-circle" aria-hidden="true"></i> 
+							Profile
+						</a>
+						<a class="nav-link" id="Privacy-tab" data-toggle="pill" href="#Privacy" role="tab" aria-controls="Privacy" aria-selected="false">
+							<i class="fa fa-bell text-center mr-1"></i> 
+							Privacy
+						</a>
+					</div>
+				</div>
+				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+
+<!------------------------------------------- Dash Board --------------------------------------------->
+					<div class="tab-pane fade show active Dashboard_con  Dashboard" id="Dashboard" role="tabpanel" aria-labelledby="Dashboard-tab">
+						<h2 class="mb-4">My Dashboard</h2>
+						<div class="row ">
+							<div class="col-12">
+								<p class="text-secondary">Hello, <strong>{{user.get_full_name}}</strong> </p>
+								<p class="text-secondary dash_para">From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
+							</div>
+							<div class="col-12">
+                                <div class="main_container" >
+                                    <div class="box-1">
+										<div class="total_conent">
+											<div class="row">
+												<div class="col-4">
+													<img src="{% static 'assets\svg\order.svg' %}" width="40px" height="40px">
+												</div>
+												<div class="col-8 ">
+												<strong class="total_order pending">Total Order</strong><br>
+												<span class="font_bold">3658</span>
+
+												</div>
+											</div>
+										</div> 
+								    </div>
+									<div class="box-1"> 
+										<div class="total_conent">
+											<div class="row">
+												<div class="col-4">
+													<img src="{% static 'assets\svg\pending.svg' %}" width="40px" height="40px">
+												</div>
+												<div class="col-8">
+												<strong class="total_order pending">Pending order</strong><br>
+												<span class="font_bold">254</span>
+
+												</div>
+											</div>
+										</div> 
+									</div>
+									<div class="box-1"> 
+										<div class="total_conent">
+											<div class="row">
+												<div class="col-4">
+													<img src="{% static 'assets\svg\wishlist.svg' %}" width="40px" height="40px">
+												</div>
+												<div class="col-8">
+												<strong class="total_order pendings">Total Wishlist</strong><br>
+												<span class="font_bold">32158</span>
+
+												</div>
+											</div>
+										</div> 
+									</div>
+                                </div>
+
+                            </div>
+							<div class="col-12">
+								<h3 class="mb-4 Dash_accont">Account Information</h3>
+								<div class="row">
+									<div class="col-12">
+										<strong class="contact_info">Contact Information</strong>
+										<span class="text-rights justify-content-end"><a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeNameModal">Edit</a></span>
+										<hr>
+										<p class="p_header ml-5 pp">{{user.get_full_name}}</p>
+										<p class="p_header ml-5 pp">{{user.email}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="row">
+									<div class="col-12">
+										<!-- <strong class="contact_info">Address Book</strong> -->
+										<strong class="contact_info">User Billing Address</strong>
+										<span class="text-rights justify-content-end"><a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit</a></span>
+										<hr>
+										<p class="p_header ml-5 pp">Address :{{customer.address}}</p>
+										<p class="p_header ml-5 pp">Phone :{{user.mobile}}</p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+<!---------------------------------------------- Order ----------------------------------------------->
+					<div class="tab-pane fade Dashboard" id="Orders" role="tabpanel" aria-labelledby="Orders-tab">
+						<h2 class="mb-4">My Orders History</h2>
+						<div class="row">
+							<h4>your products </h4>
+						</div>
+					
+					</div>
+<!------------------------------------------- Wish List ----------------------------------------------->
+					<div class="tab-pane fade Dashboard" id="Wishlist" role="tabpanel" aria-labelledby="Wishlist-tab">
+						<h2 class="mb-4">My Wishlist History</h2>
+						<div class="row">
+							<p>Show your Wishlist</p>
+						</div>
+					</div>
+<!--------------------------------------------- Address ----------------------------------------------->
+					<div class="tab-pane fade Dashboard" id="Address" role="tabpanel" aria-labelledby="Address-tab">
+						<h2 class="mb-4">My Address Book</h2>
+						<div class="row">
+							<p>showing your address </p>
+						</div>
+					</div>
+<!--------------------------------------------- Profile ----------------------------------------------->                   
+					<div class="tab-pane fade Dashboard" id="Profile" role="tabpanel" aria-labelledby="Profile-tab">
+						<h2 class="mb-4 ">My Profile</h2>
+
+					     <div class="deshbord_profile">
+							<div class="profile_first">
+								<div class="col-12">
+									<strong class="profile_nam">Profile Name</strong><br>
+									<strong class="profile_head" style="padding-left: 10px;">{{user.get_full_name}}</strong>
+									<!-- <button class="btn_e" data-bs-toggle="modal" data-bs-target="#profileModal">Edit</button> -->
+									<button class="btn_e" type="button" data-toggle="modal" data-target="#profileModal">Edit</button>
+									<div class="other_info">
+										<span class="span-txt">Downers Grove, IL</span>
+										<span class="span-txt">{{user.email}}</span>
+										<span class="span-txt">Licensed for 2 years</span>
+									</div>
+									<hr>
+									<div class="profile_para">
+										<p class="p_para text-secondary">Residences can be classified by and how they are connected to neighbouring residences and land. Different types of housing tenure can be used for the same physical type.</p>
+									</div>
+								</div>
+							</div>
+	
+							<div class="profile_second">
+								<div class="profile_last">
+									<div class="col-12">
+										<strong class="profile_nam">Profile About</strong><br>
+										<div class="row">
+											<div class="col-8 pro_8">
+												<p style="font-size: 18px;"><b>Gender :</b> <span>{{customer.gender}}</span> </p><br>
+												<p style="font-size: 18px;"><b>Birthday :</b> <span>{{customer.date_of_birth}}</span> </p><br>
+												<p style="font-size: 18px;"><b>Phone Number :</b> <span>{{user.mobile}}</span></p><br>
+												<p style="font-size: 18px;"><b>Address :</b> <span>{{customer.address}}</span> </p><br>
+												<p style="font-size: 18px;"><b>Email :</b> {{user.email}}</p><br>
+												<!-- <span class="pt-3" >Password: ●●●●● <a href="#"><button class="btn_s">Edit</button></a> </span> -->
+											</div>
+											<div class="col-4">
+												<div class="profile_images">
+													<img class="profile_img" src="{% static 'assets\img\Auth\profile.PNG' %}">
+												</div>
+												
+											</div>
+										</div>
+		
+									</div>
+								</div>
+							</div>
+						 </div>
+						
+					</div>
+<!---------------------------------------------- Privecy ---------------------------------------------->
+					<div class="tab-pane fade show Dashboard_con  Dashboard" id="Privacy" role="tabpanel" aria-labelledby="Privacy-tab">
+                        <h2 class="mb-4">Privacy</h2>
+                        <div class="first_privac mb-4 ">                               
+                            <strong class="ml-5" style="font-size: 20px;">Account Privacy</strong>
+                            <div style="padding-left: 10px;"> 
+                                <div class="col-12">
+                                    <p class="mt-5" style="font-size: 16px;">To Change Yor Email: <b>{{user.email}}</b></p>
+									<button class="btn  btn-sm btn-success mb-3 ml-1" data-toggle="modal" data-target="#ProfileEmailChangeModal">Email Change</button>
+
+
+                                    <p style="font-size: 16px;">To Change Your Password:</p>
+									<button class="btn  btn-sm btn-success mb-3 ml-1" data-toggle="modal" data-target="#ChangePasswordModal">Password Change</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="second_privac">
+                            <strong style="font-size: 20px;">Account settings</strong>
+                            <div class="col-12 ml-5">
+                                <p class="mt-2">Deleting Your Account Will Permanently</p>
+                                <p class="text-muted">Once your account is deleted, you will be logged out and will be unable to log in back.</p>
+                                <p class="text-muted">Once your account is deleted, you will be logged out and you will be create new account</p>
+                                <button class="btn  btn-sm btn-success mb-3 ml-1" data-toggle="modal" data-target="#ProfileDeleteModal">Delete Account</button>
+                            </div>
+                        </div>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+    <!-- User Dashboard Section End -->
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++  Modals  ++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- Edit Profile Picture Modal Start -->
+    <div class="modal fade" id="editProPic" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: royalblue; font-size: large;">Profile Picture Change</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="pro_pic">Upload Your Profile Image</label>
+                            <input type="file" class="form-control" id="pro_pic" aria-describedby="emailHelp" name="pro_pic" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Profile Picture Modal End -->
+
+
+
+
+    <!-- Edit Cover Picture Modal Start -->
+    <div class="modal fade" id="editCovPic" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" style="color: royalblue; font-size: large;">Cover Image Change</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="Cov_pic">Upload Your Cover Image</label>
+                            <input type="file" class="form-control" id="Cov_pic" aria-describedby="emailHelp" name="Cov_pic" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Cover Picture Modal End -->
+
+
+
+	<!-- Edit Profile Start -->
+	<div class="modal fade" id="profileModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" style="color: royalblue; font-size: large;">Update Your Profile</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+						<form method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="dateofbirth">Date of bithday (MM/DD/YYYY)</label>
+								<input type="date" class="form-control" id="dateofbirth" name="date_of_birth" value="{{customer.date_of_birth}}" required>
+							</div>
+
+
+							<label for="gender">Gender</label>
+							<div class="form-group">
+								<select class="" id="gender" name="gender">
+									<option selected="selected" value="{{customer.gender}}">{{customer.gender}}</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+									<option value="Others">Others</option>
+								</select>
+							</div><br><br>
+
+							<div class="form-group">
+								<label for="phn">Phone Number</label>
+								<input type="text" class="form-control" id="phn" name="phone" value="{{user.mobile}}" required>
+							</div>
+
+
+							<div class="form-group">
+								<label for="address_1">Address</label>
+								<textarea class="form-control" rows="6" id="address_1" name="address" required>{{customer.address}}</textarea>
+							</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger btn-md fw-bold" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Upload</button>
+							</div>							
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Edit Profile End -->
+
+	<!-- Change Profile Name Start -->
+	<div class="modal fade" id="ChangeNameModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" style="color: royalblue; font-size: large;">Change Your Profile Name</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+						<form method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="phn">First Name</label>
+								<input type="text" class="form-control" id="phn" name="first_name" value="{{user.first_name}}" required>
+							</div>
+
+							<div class="form-group">
+								<label for="phn">Phone Number</label>
+								<input type="text" class="form-control" id="phn" name="last_name" value="{{user.last_name}}" required>
+							</div>
+
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger btn-md fw-bold" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Upload</button>
+							</div>							
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Change Profile End -->
+
+
+	<!-- Edit Change Password Modal Start -->
+	<div class="modal fade" id="ChangePasswordModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" style="color: royalblue; font-size: large;">Change Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+						{% if messages %}
+							{% for mess in messages %}
+								<div class="alert alert-danger" role="alert">
+									{{mess}}
+								</div>
+							{% endfor %}
+						{% endif %}
+						<form class="row g-4" method="POST">
+							{% csrf_token %}
+							<div class="col-12">
+								<div class="form-floating theme-form-floating log-in-form">
+									<input type="password" class="form-control" id="Old_Password"
+											placeholder="Old Password" autocomplete="off" required name="Old_Password">
+									<label for="Old_Password">Old Password</label>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-floating theme-form-floating log-in-form">
+									<input type="password" class="form-control" id="New_Password"
+											placeholder="New Password" autocomplete="off" required name="New_Password">
+									<label for="New_Password">New Password</label>
+								</div>
+							</div>
+					
+							<div class="col-12">
+								<div class="form-floating theme-form-floating log-in-form">
+									<input type="password" class="form-control" id="New_Password_Confirmation"
+											placeholder="New_Password_Confirmation" autocomplete="off" required
+											name="New_Password_Confirmation">
+									<label for="New_Password_Confirmation">New Password Confirmation</label>
+								</div>
+							</div>
+					
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger btn-md fw-bold" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Upload</button>
+							</div>	
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Edit Change Password Modal End -->
+
+	<!-- To Delete Profile Start -->
+	<div class="modal fade" id="ProfileDeleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" style="color: royalblue; font-size: large;">Delete Profile</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+						{% if messages %}
+							{% for mess in messages %}
+								<div class="alert alert-danger" role="alert">
+									{{mess}}
+								</div>
+							{% endfor %}
+						{% endif %}
+						<form class="row g-4" method="POST">
+							{% csrf_token %}
+							<p style="font-size: large; color: brown;">If you press Delete button then you loss you Account.</p>
+							<div class="col-12">
+								<div class="form-floating theme-form-floating log-in-form">
+									<input type="password" class="form-control" id="Password"
+											placeholder="Password" autocomplete="off" required name="Password">
+									<label for="Password">Password</label>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<input type="hidden" name="profile_delete_id" value="{{user.id}}">
+								<button type="button" class="btn btn-danger btn-md fw-bold" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Delete</button>
+							</div>	
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- To Delete Profile End -->
+
+	<!-- To Change Email Start -->
+	<div class="modal fade" id="ProfileEmailChangeModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" style="color: royalblue; font-size: large;">Email Change</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+						{% if messages %}
+							{% for mess in messages %}
+								<div class="alert alert-danger" role="alert">
+									{{mess}}
+								</div>
+							{% endfor %}
+						{% endif %}
+						<form class="row g-4" action="{% url 'email_change' %}" method="POST">
+							{% csrf_token %}
+							<div class="col-12">
+								<div class="form-floating theme-form-floating log-in-form">
+									<input type="email" class="form-control" id="email"
+											placeholder="Give New Email" autocomplete="off" required name="new_email">
+									<label for="email">Give New Email</label>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-floating theme-form-floating log-in-form">
+									<input type="password" class="form-control" id="Password"
+											placeholder="Password" autocomplete="off" required name="Password">
+									<label for="Password">Password</label>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<input type="hidden" name="Old_Email" value="{{user.email}}">
+								<button type="button" class="btn btn-danger btn-md fw-bold" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Update</button>
+							</div>	
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- To Change Email End -->
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++  CSS and JS  ++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    {% endblock body %}
+        
+        
+    {% block css %}
+        <!-- <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="{% static 'assets/css/custom/user_profile.css' %}">
+    {% endblock css %}
+
+    {% block js %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    {% endblock js %}

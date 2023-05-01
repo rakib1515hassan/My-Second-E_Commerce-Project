@@ -1,0 +1,71 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Elail Change | OTP{% endblock title %}
+
+{% block body%}
+    <!-- log in section start -->
+    <section class="log-in-section otp-section section-b-space" style="margin-top: 50px; margin-bottom: 200px;">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
+                    <div class="image-contain">
+                        <img src="{% static 'assets\img\Auth\OTP_Send.jpeg' %}" class="img-fluid" alt="">
+                    </div>
+                </div>
+
+                <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
+                    <div class="d-flex align-items-center justify-content-center h-100">
+                        <div class="log-in-box" style="width: 1000px;">
+                            <div class="log-in-title">
+                                <h3 class="text-title text-center">Please enter OTP to verify your Email</h3>
+                                <h5 class="text-content text-center">A code has been sent to Your New Email.</h5>
+                            </div>
+                            <div id="otp" class="inputs d-flex flex-row justify-content-center">
+                
+                                <form class="row g-4" method="POST">
+                                    {% csrf_token %}
+                                    {% if messages %}
+                                        {% for mess in messages %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {{mess}}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                   <div class="col-12">
+                                      <div class="form-floating theme-form-floating log-in-form">
+                                         <input type="number" class="form-control" id="otp" placeholder="Enter OTP Number" name="otp" onfocus="this.placeholder = ''" onblur="this.placeholder = 'otp'" required>
+                                         <label for="otp">OTP Number</label>
+                                      </div>
+                                   </div>
+                                   <div class="col-12">
+                                        <input type="hidden" name="usr" value="{{user.email}}">
+                                      <button class="btn btn-primary w-100 justify-content-center" type="submit">Validate</button>
+                                   </div>
+                                </form>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- log in section end -->
+
+{% endblock body%}
+
+
+{% block css %}
+<style>
+.log-in-box {
+    background-color: #f8f8f8;
+    padding: calc(16px + 34*(100vw - 320px)/1600);
+    border-radius: calc(8px + 4*(100vw - 320px)/1600);
+}
+.forgot-password {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline;
+    color: red;
+}
+</style>
+{% endblock css %}

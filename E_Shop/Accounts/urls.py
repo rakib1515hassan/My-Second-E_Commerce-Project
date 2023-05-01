@@ -11,11 +11,13 @@ urlpatterns = [
     path('user_logout/', user_logout, name='user_logout'),
     
     path('user_profile/', user_profile, name='user_profile'),
+
+    path('email-change/', email_change, name='email_change'),
+
     path('seller_profile/', seller_profile, name='seller_profile'),
 
 
 
     path('otp_verify/', otp_verify, name='otp_verify'),
     path('resend_OTP/', resend_OTP, name='resend_OTP'),
-    path('test/', test, name='test'),
 ]
