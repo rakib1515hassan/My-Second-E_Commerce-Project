@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from Accounts.models import User, Customer, Seller, UserOTP
+from Accounts.models import User, Customer, Seller, UserOTP, Customer_Address
 from .forms import UserCreationForm,UserChangeForm
 # from .models import User
 
@@ -48,3 +48,4 @@ admin.site.register(User,UserAdmin)
 admin.site.register(Customer)
 admin.site.register(Seller)
 admin.site.register(UserOTP)
+admin.site.register(Customer_Address)

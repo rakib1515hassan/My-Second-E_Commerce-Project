@@ -134,6 +134,23 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+
+
+class Customer_Address(models.Model):
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    Division = models.CharField(max_length=50, null=True, blank=True)
+    Sub_division = models.CharField(max_length=50, null=True, blank=True)
+    Zipcode = models.CharField(max_length=50, null=True, blank=True)
+    Home_Address = models.CharField(max_length=50, null=True, blank=True)
+    Phone = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.user.email
+    
+    def  get_full_address(self):
+        return f"{self.Home_Address}, {self.Sub_division}-{self.Zipcode}, {self.Division}"
 
 
 
@@ -147,3 +164,6 @@ class Seller(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+
+

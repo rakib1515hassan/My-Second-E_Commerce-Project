@@ -171,8 +171,54 @@
 <!--------------------------------------------- Address ----------------------------------------------->
 					<div class="tab-pane fade Dashboard" id="Address" role="tabpanel" aria-labelledby="Address-tab">
 						<h2 class="mb-4">My Address Book</h2>
-						<div class="row">
-							<p>showing your address </p>
+						<span class="mb-5"><i class="fa fa-address-book-o" aria-hidden="true"></i><b>Add New Address: </b></span>
+						<button class="btn btn-success mb-5" type="button" data-toggle="modal" data-target="#add-address">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+							Add Address
+						</button>
+						{% include 'message.html' %}
+						<div class="row g-sm-4 g-3">
+							<table class="customer-address-table">
+								<thead>
+								  <tr>
+									<th>Address No</th>
+									<th>Division</th>
+									<th>District</th>
+									<th>Zipcode</th>
+									<th>Home & Road No</th>
+									<th>Phone Number</th>
+									<th>Edit</th>
+									<th>Remove</th>
+								  </tr>
+								</thead>
+								<tbody>
+								{% for address in user.customer.customer_address_set.all %}
+								  <tr>
+									<td>{{forloop.counter}}</td>
+									<td>{{address.Division}}</td>
+									<td>{{address.Sub_division}}</td>
+									<td>{{address.Zipcode}}</td>
+									<td>{{address.Home_Address}}</td>
+									<td>+88{{address.Phone}}</td>
+									<td>
+										<button class="btn btn-warning" type="button" data-toggle="modal" data-target="#edit-address-{{address.id}}">
+											<i class="fa fa-pencil-square-o" aria-hidden="true"></i>	
+										</button>
+									</td>
+									<td>
+										<form action="{% url 'customer_address' %}" method="POST">
+											{% csrf_token %}
+											<input type="hidden" name="delete_id" value="{{address.id}}">
+											<button type="submit" class="btn btn-danger">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</form>										
+									</td>
+								  </tr>
+								{% endfor %}
+								</tbody>
+							  </table>
+								  
 						</div>
 					</div>
 <!--------------------------------------------- Profile ----------------------------------------------->                   
@@ -236,7 +282,7 @@
 									<button class="btn  btn-sm btn-success mb-3 ml-1" data-toggle="modal" data-target="#ProfileEmailChangeModal">Email Change</button>
 
 
-                                    <p style="font-size: 16px;">To Change Your Password:</p>
+                                    <p style="font-size: 16px;">To Change Your Password: **********</p>
 									<button class="btn  btn-sm btn-success mb-3 ml-1" data-toggle="modal" data-target="#ChangePasswordModal">Password Change</button>
                                 </div>
                             </div>
@@ -571,11 +617,105 @@
         </div>
     </div>
 	<!-- To Change Email End -->
-
-
 	
+	
+	<!-- Add Customer Address Start -->
+	<div class="modal fade" id="add-address" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel" style="color: royalblue; font-size: large;">Address BOX</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			<form action="{% url 'customer_address' %}" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+				  <label for="Division" class="col-form-label">Division:</label>
+				  <input type="text" class="form-control" id="Division" name="division" required>
+				</div>
+				<div class="form-group">
+					<label for="Sub_Division" class="col-form-label">Sub Division:</label>
+					<input type="text" class="form-control" id="Sub_Division" name="sub_division" required>
+				</div>
+				<div class="form-group">
+					<label for="Zipcode" class="col-form-label">Zipcode:</label>
+					<input type="text" class="form-control" id="Zipcode" name="zipcode">
+				</div>
+					<div class="form-group">
+					<label for="home" class="col-form-label">Home & Road No:</label>
+					<input type="text" class="form-control" id="home" name="home" required>
+				</div>
+				<div class="form-group">
+					<label for="r_number" class="col-form-label">Reception Number:</label>
+					<input type="text" class="form-control" id="r_number" name="r_number" required>
+				</div>
+			
+				
+				<div class="modal-footer">
+					<input type="hidden" name="add_id" value="add">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</div>
+				
+			  </form>
+			</div>
+		  </div>
+		</div>
+	</div>
+	<!-- Add Customer Address End -->
 
-
+	<!-- Edit Customer Address Start -->
+	{% for address in user.customer.customer_address_set.all %}
+	<div class="modal fade" id="edit-address-{{address.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel" style="color: royalblue; font-size: large;">Address Edit</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			<form action="{% url 'customer_address' %}" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="Division" class="col-form-label">Division:</label>
+					<input type="text" class="form-control" id="Division" name="division" required value="{{address.Division}}">
+				</div>
+				<div class="form-group">
+					<label for="Sub_Division" class="col-form-label">Sub Division:</label>
+					<input type="text" class="form-control" id="Sub_Division" name="sub_division" required value="{{address.Sub_division}}">
+				</div>
+				<div class="form-group">
+					<label for="Zipcode" class="col-form-label">Zipcode:</label>
+					<input type="text" class="form-control" id="Zipcode" name="zipcode" value="{{address.Zipcode}}">
+				</div>
+					<div class="form-group">
+					<label for="home" class="col-form-label">Home & Road No:</label>
+					<input type="text" class="form-control" id="home" name="home" required value="{{address.Home_Address}}">
+				</div>
+				<div class="form-group">
+					<label for="r_number" class="col-form-label">Reception Number:</label>
+					<input type="text" class="form-control" id="r_number" name="r_number" required value="{{address.Phone}}">
+				</div>
+			
+				
+				<div class="modal-footer">
+					<input type="hidden" name="edit_id" value="{{address.id}}">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Update</button>
+				</div>
+				
+				</form>
+			</div>
+			</div>
+		</div>
+	</div>
+		{% endfor %}
+	<!-- Edit Customer Address End -->
 
 
 
@@ -604,14 +744,73 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="{% static 'assets/css/custom/user_profile.css' %}">
+
+		<style>
+			.customer-address-table {
+			font-family: Arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+			}
+
+			.customer-address-table th, .customer-address-table td {
+			border: 1px solid #ddd;
+			padding: 8px;
+			color: rgb(22, 7, 7);
+			}
+
+			.customer-address-table th {
+			background-color: #48c689;
+			text-align: left;
+			color: #f2f2f2 !important;
+			}
+
+			.customer-address-table tbody tr:nth-child(even) {
+			background-color: #f2f2f2;
+			}
+
+			.customer-address-table tbody tr:hover {
+			background-color: #ddd;
+			}
+
+			.customer-address-table tbody td:nth-child(1) {
+			width: 10%;
+			}
+
+			.customer-address-table tbody td:nth-child(2) {
+			width: 15%;
+			}
+
+			.customer-address-table tbody td:nth-child(3) {
+			width: 15%;
+			}
+
+			.customer-address-table tbody td:nth-child(4) {
+			width: 10%;
+			}
+
+			.customer-address-table tbody td:nth-child(5) {
+			width: 30%;
+			}
+
+			.customer-address-table tbody td:nth-child(6) {
+			width: 15%;
+			}
+			.customer-address-table tbody td:nth-child(7) {
+			width: 30%;
+			}
+			.customer-address-table tbody td:nth-child(8) {
+			width: 30%;
+			}
+		</style>
+
     {% endblock css %}
 
     {% block js %}
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
     {% endblock js %}
