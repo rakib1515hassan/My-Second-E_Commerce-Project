@@ -53,6 +53,12 @@ def customer_reg(request):
                 usr_otp = random.randint(100000, 999999)
                 UserOTP.objects.create(user = user_obj, otp = usr_otp)
 
+                request.session['email'] = user_obj.email
+
+                # print('----------------------')
+                # print('Login OTP = ',usr_otp)
+                # print('----------------------')
+
                 mess = f"Hello {user_obj.first_name}{user_obj.last_name},\nYour OTP is {usr_otp}\nThanks!"
 
                 send_mail(
@@ -98,9 +104,12 @@ def seller_reg(request):
                 # It Replace Signals---------------------------
                 seller= Seller.objects.create(user=user_obj)
                 seller.save()
+
                 # Now Send Mail-------------------------------------------
                 usr_otp = random.randint(100000, 999999)
                 UserOTP.objects.create(user = user_obj, otp = usr_otp)
+
+                request.session['email'] = user_obj.email
 
                 mess = f"Hello {user_obj.first_name}{user_obj.last_name},\nYour OTP is {usr_otp}\nThanks!"
 
@@ -129,7 +138,7 @@ def user_login(request):
         # print("--------------------------------------------")
 
         user_obj = User.objects.filter(email=email).first()
-        # user_a = User.objects.filter(email = email).exists()
+
         if (user_obj is not None) and (user_obj.check_password(password)== True):
             # Customer Login-----------------------------------------------------------------------------------------
             if user_obj.is_customer == True and user_obj.is_active == True:
@@ -142,6 +151,13 @@ def user_login(request):
                 UserOTP.objects.get(user = usr).delete()
                 usr_otp = random.randint(100000, 999999)
                 UserOTP.objects.create(user = usr, otp = usr_otp)
+
+                request.session['email'] = usr.email
+
+                # print('----------------------')
+                # print('Login OTP = ',usr_otp)
+                # print('----------------------')
+
                 mess = f"Hello {usr.first_name}{usr.last_name},\nYour OTP is {usr_otp}\nThanks!"
 
                 send_mail(
@@ -152,6 +168,7 @@ def user_login(request):
                     fail_silently = False
                     )
                 return render(request, 'Accounts/OTP_verify.html', {'user': usr})
+            
             # Seller Login------------------------------------------------------------------------------------------
             elif user_obj.is_seller == True and user_obj.is_active == True:
                 user = authenticate(request, email=email, password=password)
@@ -163,6 +180,9 @@ def user_login(request):
                 UserOTP.objects.get(user = usr).delete()
                 usr_otp = random.randint(100000, 999999)
                 UserOTP.objects.create(user = usr, otp = usr_otp)
+
+                request.session['email'] = usr.email
+
                 mess = f"Hello {usr.first_name}{usr.last_name},\nYour OTP is {usr_otp}\nThanks!"
 
                 send_mail(
@@ -173,6 +193,7 @@ def user_login(request):
                     fail_silently = False
                     )
                 return render(request, 'Accounts/OTP_verify.html', {'user': usr})
+            ## -----------------------------------------------------------------------------------------------------
         elif not User.objects.filter(email = email).exists():
             messages.warning(request, f'Please enter a correct email.')
             return redirect('user_login')
@@ -197,9 +218,11 @@ def otp_verify(request):
         get_otp = request.POST.get('otp') #213243 #None
 
         if get_otp:
-            get_usr = request.POST.get('user_otp')
+            get_usr = request.session['email']
             user_obj = User.objects.get(email=get_usr)
             if user_obj:
+
+                # Customer Verify------------------------------------------------------------------------------------------
                 if user_obj.is_customer == True and user_obj.is_active == False:
                     user = user_obj  # Or users[0]
                     otp_obj = UserOTP.objects.get(user = user)
@@ -218,7 +241,8 @@ def otp_verify(request):
                     else:
                         messages.warning(request, f'You Entered a Wrong OTP')
                         return render(request, 'Accounts/OTP_verify.html', {'user': user})
-                
+                    
+                # Seller Verify------------------------------------------------------------------------------------------
                 elif user_obj.is_seller == True and user_obj.is_active == False:
                     user = user_obj  # Or users[0]
                     otp_obj = UserOTP.objects.get(user = user)
@@ -270,29 +294,40 @@ def otp_verify(request):
 
 ## Withot Javascripts----------------------------------------------------------------------------------------
 def resend_OTP(request):
-    if request.method == "GET":
-        get_usr = request.GET.get('otp')
+    if request.method == "POST":
+        get_resend_request = request.POST.get('resend')
+
+        get_usr = request.session['email']
+
         # print("--------------------------")
+        # print("Get Resend Request: ",get_resend_request)
         # print("User Email: ",get_usr)
         # print("--------------------------")
-        usr = User.objects.filter(email=get_usr).first()
-        if User.objects.filter(email = get_usr).exists() and not User.objects.get(email = get_usr).is_active:
-            usr = User.objects.get(email=get_usr)
-            UserOTP.objects.get(user = usr).delete()
-            usr_otp = random.randint(100000, 999999)
-            UserOTP.objects.create(user = usr, otp = usr_otp)
-            mess = f"Hello {usr.first_name}{usr.last_name},\nYour OTP is {usr_otp}\nThanks!"
 
-            send_mail(
-                "Welcome to IT-MrH Solution - Verify Your Email",
-                mess,
-                settings.EMAIL_HOST_USER,
-                [usr.email],
-                fail_silently = False
-                )
-            return render(request, 'Accounts/OTP_verify.html', {'user': usr})
+        if get_resend_request:
+            usr = User.objects.filter(email=get_usr).first()
+            if User.objects.filter(email = get_usr).exists() and not User.objects.get(email = get_usr).is_active:
+                usr = User.objects.get(email=get_usr)
+                UserOTP.objects.get(user = usr).delete()
+                usr_otp = random.randint(100000, 999999)
+                UserOTP.objects.create(user = usr, otp = usr_otp)
+
+                # print('----------------------')
+                # print('Resend OTP = ',usr_otp)
+                # print('----------------------')
+
+                mess = f"Hello {usr.first_name}{usr.last_name},\nYour OTP is {usr_otp}\nThanks!"
+
+                send_mail(
+                    "Welcome to IT-MrH Solution - Verify Your Email",
+                    mess,
+                    settings.EMAIL_HOST_USER,
+                    [usr.email],
+                    fail_silently = False
+                    )
+                return render(request, 'Accounts/OTP_verify.html', {'user': usr})
         
-        return render(request, 'Accounts/OTP_verify.html', {'user': usr})
+        return render(request, 'Accounts/OTP_verify.html')
 
 
 
@@ -303,9 +338,9 @@ def seller_info(request):
         tread_licence = request.FILES.get('tread_licence')
         nid = request.FILES.get('nid')
         address = request.POST.get('address')
-        print('-----------------------------')
-        print(usr_email,shop_nam,tread_licence,nid, address)
-        print('-----------------------------')
+        # print('-----------------------------')
+        # print(usr_email,shop_nam,tread_licence,nid, address)
+        # print('-----------------------------')
         usr = User.objects.get(email = usr_email)
         seller = Seller.objects.get(user = usr)
         if seller:
@@ -333,7 +368,7 @@ def seller_info(request):
 
 
 
-###---------------------------------------------------  Profile   --------------------------------------------
+###---------------------------------------------------  Profile   -----------------------------------------------
 
 
 
@@ -550,9 +585,9 @@ def customer_address(request):
         d_id = request.POST.get('delete_id')
         e_id = request.POST.get('edit_id')
 
-        print('---------------------------------')
-        print(f"Division={division}, Sub Division={sub_division}, Zipcode={zipcode}, Home={home}, Phone={r_number}")
-        print('---------------------------------')
+        # print('---------------------------------')
+        # print(f"Division={division}, Sub Division={sub_division}, Zipcode={zipcode}, Home={home}, Phone={r_number}")
+        # print('---------------------------------')
 
         customer = Customer.objects.get(user = request.user)
 
@@ -616,6 +651,7 @@ def Take_Email(request):
                 otp_model.otp = new_otp
                 otp_model.save()
                 request.session['email'] = user.email
+                
                 # print('----------------------------')
                 # print('New OTP = ',new_otp)
                 # print('----------------------------')
@@ -640,9 +676,12 @@ def Take_Email(request):
 def Take_OTP(request):
     if request.method == 'POST':
         given_otp = request.POST.get('otp')
+        resend_otp = request.POST.get('resend_otp')
 
+        email = request.session['email']
+
+        ## Submit OTP-----------------------------------------------------------------------------------
         if given_otp:
-            email = request.session['email']
             user = User.objects.get(email=email)
             otp_model = UserOTP.objects.get(user = user)
             
@@ -653,6 +692,31 @@ def Take_OTP(request):
             else:
                 messages.error(request, "Your OTP Don't Match. Please Give Correct OTP.")
                 return redirect('Take_OTP')
+            
+        ## Resend OTP-------------------------------------------------------------------------------------
+        elif resend_otp:   
+            if User.objects.filter(email = email).exists() and User.objects.get(email = email).is_active:
+                usr = User.objects.get(email=email)
+                UserOTP.objects.get(user = usr).delete()
+                usr_otp = random.randint(100000, 999999)
+                UserOTP.objects.create(user = usr, otp = usr_otp)
+                # print("---------------------------")
+                # print("Your Resend OTP=",usr_otp)
+                # print("---------------------------")
+                mess = f"Hello {usr.first_name}{usr.last_name},\nYour OTP is {usr_otp}\nThanks!"
+
+                send_mail(
+                    "Welcome to IT-MrH Solution - Verify Your Email",
+                    mess,
+                    settings.EMAIL_HOST_USER,
+                    [usr.email],
+                    fail_silently = False
+                    )
+                messages.success(request, f"Again Sending Mail On {email}")
+                return redirect('Take_OTP')
+            elif User.objects.filter(email = email).exists() and not User.objects.get(email = email).is_active:
+                messages.warning(request, "Please Active Your Account First.")
+                return redirect('user_login')
     return render(request, "Accounts/ForgetPassword/GetOTP.html")
 
 

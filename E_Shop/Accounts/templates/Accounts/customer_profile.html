@@ -133,8 +133,9 @@
 										<strong class="contact_info">Contact Information</strong>
 										<span class="text-rights justify-content-end"><a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeNameModal">Edit</a></span>
 										<hr>
-										<p class="p_header ml-5 pp">{{user.get_full_name}}</p>
-										<p class="p_header ml-5 pp">{{user.email}}</p>
+										<p class="p_header ml-5 pp"><b>Name :</b> {{user.get_full_name}}</p>
+										<p class="p_header ml-5 pp"><b>Email :</b> {{user.email}}</p>
+										<p class="p_header ml-5 pp"><b>Phone :</b> {{user.mobile}}</p>
 									</div>
 								</div>
 							</div>
@@ -145,8 +146,14 @@
 										<strong class="contact_info">User Billing Address</strong>
 										<span class="text-rights justify-content-end"><a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit</a></span>
 										<hr>
-										<p class="p_header ml-5 pp">Address :{{customer.address}}</p>
-										<p class="p_header ml-5 pp">Phone :{{user.mobile}}</p>
+										{% for address in user.customer.customer_address_set.all %}
+											<p class="p_header ml-5 pp">
+												<b>
+													Address-{{forloop.counter}} :
+												</b>
+												{{address.get_full_address}}
+											</p>
+										{% endfor %}
 									</div>
 								</div>
 							</div>

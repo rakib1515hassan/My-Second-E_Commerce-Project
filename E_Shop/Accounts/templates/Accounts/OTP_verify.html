@@ -28,7 +28,6 @@
                                       <div class="form-floating theme-form-floating log-in-form">
                                          <input type="number" class="form-control" id="otp" placeholder="Enter OTP Number" name="otp" onfocus="this.placeholder = ''" onblur="this.placeholder = 'otp'" required>
                                          <label for="otp">OTP Number</label>
-                                         <input type="hidden" name="user_otp" value="{{user.email}}">
                                       </div>
                                    </div>
                                    <div class="col-12">
@@ -38,35 +37,18 @@
                                 </form>
                             </div>
                         
-                            <!-- <div id="otp" class="inputs d-flex flex-row justify-content-center">
-                                <input class="text-center form-control rounded" type="text" id="first" maxlength="1"
-                                    placeholder="0">
-                                <input class="text-center form-control rounded" type="text" id="second" maxlength="1"
-                                    placeholder="0">
-                                <input class="text-center form-control rounded" type="text" id="third" maxlength="1"
-                                    placeholder="0">
-                                <input class="text-center form-control rounded" type="text" id="fourth" maxlength="1"
-                                    placeholder="0">
-                                <input class="text-center form-control rounded" type="text" id="fifth" maxlength="1"
-                                    placeholder="0">
-                                <input class="text-center form-control rounded" type="text" id="sixth" maxlength="1"
-                                    placeholder="0">
-                            </div> -->
-
                             <div class="send-box pt-4 mt-2 text-center">
                                 <h5>Didn't get the code? </h5>
                                 <!-- <a href="#" onclick="ResendOTP('{{user.email}}','ResendOTPmessage')" class="theme-color fw-bold" id="ResendOTPmessage">
                                     Resend OTP
                                 </a> -->
-                                <form action="{% url 'resend_OTP' %}" method="GET">
-                                    <input type="hidden" name="otp" value="{{user.email}}">
+                                <form action="{% url 'resend_OTP' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="resend" value="Resend">
                                     <button type="submit" class="theme-color fw-bold" style="color: red;">Resend OTP</button>
                                 </form>
                                 
                             </div>
-
-                            <!-- <button onclick="location.href = 'index.html';" class="btn btn-animation w-100 mt-3"
-                                type="submit">Validate</button> -->
                         </div>
                     </div>
                 </div>

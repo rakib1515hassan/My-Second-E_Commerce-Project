@@ -150,7 +150,7 @@ class Customer_Address(models.Model):
         return self.user.user.email
     
     def  get_full_address(self):
-        return f"{self.Home_Address}, {self.Sub_division}-{self.Zipcode}, {self.Division}"
+        return f"{self.Home_Address}, {self.Sub_division}-{self.Zipcode}, {self.Division}, Phone: {self.Phone}"
 
 
 

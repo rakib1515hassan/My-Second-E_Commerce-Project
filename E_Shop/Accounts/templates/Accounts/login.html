@@ -50,7 +50,7 @@
                                                     id="flexCheckDefault">
                                                 <label class="form-check-label" for="flexCheckDefault">Remember me</label>
                                             </div>
-                                            <a href="{% url 'Take_Email' %}" class="forgot-password">Forgot Password?</a>
+                                            <a href="{% url 'Take_Email' %}" class="forgot-password" ><b>Forgot Password</b></a>
                                         </div>
                                     </div>
 
@@ -106,6 +106,9 @@
     font-weight: 500;
     display: inline;
     color: red;
+}
+.forgot-password :hover b {
+    color:rgb(177, 223, 69) !important;
 }
 </style>
 {% endblock css %}

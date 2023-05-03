@@ -43,8 +43,20 @@
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 justify-content-center" type="submit">Submit</button>
+                                <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;" >
+                                    <span>To Cancel The Request</span>
+                                </div>
+                                <a class="btn btn-outline-warning w-100 justify-content-center" href="{% url 'user_login' %}">Cancel</a>
                             </div>
                         </form>
+
+                        <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;" >
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="resend_otp" value="Resend">
+                                <span><button class="resend" style="color: red;" type="submit"><b>Resend OTP</b></button></span>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,6 +74,9 @@
         background-color: #f8f8f8;
         padding: calc(16px + 34*(100vw - 320px)/1600);
         border-radius: calc(8px + 4*(100vw - 320px)/1600);
+    }
+    .resend:hover b {
+    color: green;
     }
 </style>
 {% endblock css %}
