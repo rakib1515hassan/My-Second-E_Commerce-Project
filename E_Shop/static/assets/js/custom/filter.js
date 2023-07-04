@@ -31,27 +31,29 @@ $(document).ready(function(){
 				});
 			});
 			console.log("Brand=",_filterObj)
-			// Run Ajax
-			$.ajax({
-				url:'/filter',
-				data:_filterObj,
-				dataType:'json',
-				beforeSend:function(){
-					$(".ajaxLoader").show();
-				},
-				success:function(res){
-					// console.log(res);
-					$("#filteredProducts").html('');
-					$("#filteredProducts").html(res.product_ajax);
-					// console.log(res.product_ajax)
 
-					// $("#brands").html('');
-					// $("#brands").html(res.brand_ajax);
-					// console.log("Brand=",res.brand)
 
-					$(".ajaxLoader").hide();
-				}
-			});	
+		// 	// Run Ajax
+		// 	$.ajax({
+		// 		url:'/filter',
+		// 		data:_filterObj,
+		// 		dataType:'json',
+		// 		beforeSend:function(){
+		// 			$(".ajaxLoader").show();
+		// 		},
+		// 		success:function(res){
+		// 			// console.log(res);
+		// 			$("#filteredProducts").html('');
+		// 			$("#filteredProducts").html(res.product_ajax);
+		// 			// console.log(res.product_ajax)
+
+		// 			// $("#brands").html('');
+		// 			// $("#brands").html(res.brand_ajax);
+		// 			// console.log("Brand=",res.brand)
+
+		// 			$(".ajaxLoader").hide();
+		// 		}
+		// 	});	
 		});
 	
 		console.log("Final=",_filterObj)

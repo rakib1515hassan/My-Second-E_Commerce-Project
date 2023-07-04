@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'Accounts',
     'Products',
     'DependApp',
+    'Cart',
 
 
     'ckeditor',
@@ -144,15 +145,12 @@ AUTHENTICATION_BACKENDS = [    'Accounts.authentication.CustomUserAuthBackend', 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-
 EMAIL_HOST_USER = "your@email.com"
 EMAIL_HOST_PASSWORD = "your password"
-
-
-
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'OTF Team <rakibdiuhassan@gmail.com>'
 

@@ -1,7 +1,13 @@
 {% if messages %}
-    {% for mess in messages %}
-        <div class="alert alert-{{mess.tags}}" role="alert">
+  {% for mess in messages %}
+    {% if mess.tags == 'error' %}
+        <div class="alert alert-danger" role="alert">
             {{mess}}
         </div>
-    {% endfor %}
+    {% else %}
+        <div class="alert alert-{{mess.tags}}" role="alert">
+          {{mess}}
+        </div>
+    {% endif %}
+  {% endfor %}
 {% endif %}
